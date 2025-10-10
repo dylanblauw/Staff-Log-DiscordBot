@@ -1,0 +1,140 @@
+# Discord Staff Management Bot
+
+A Discord bot that can manage staff members and logs all staff activities in a dedicated channel.
+
+## ✨ Features
+
+- **Staff Management**: Add and remove staff members
+- **Automatic Logging**: All staff commands are automatically logged
+- **Moderation Commands**: Kick, ban, timeout, warn commands
+- **Log Channel Creation**: Automatic creation of log channels
+- **Permission System**: Only staff and admins can use moderation commands
+
+## 🚀 Setup
+
+### 1. Set Bot Token
+Fill in your bot token in the `.env` file:
+```
+BOT_TOKEN=your_bot_token_here
+OWNER_ID=your_discord_user_id
+```
+
+### 2. Bot Permissions
+Make sure your bot has the following permissions:
+- `Send Messages`
+- `Use Slash Commands`
+- `Embed Links`
+- `Manage Channels` (**Important**: for creating individual log channels)
+- `Kick Members`
+- `Ban Members`
+- `Moderate Members` (for timeouts)
+
+### 3. Start the Bot
+```bash
+npm start
+```
+
+### 4. Initial Setup in Discord
+1. Use `/addstaff @user` to add your first staff members (each gets their own log channel)
+2. Use `/setuplog info` to see information about the individual log system
+3. Staff members can now use moderation commands and their actions will be logged in their personal channels
+
+## 📋 Commands
+
+### 👥 Staff Management
+- `/addstaff <user>` - Add a member to the staff team (Admin only)
+- `/removestaff <user>` - Remove a member from the staff team (Admin only)
+- `/stafflist` - Show all staff members
+
+### ⚔️ Moderation (Staff only)
+- `/kick <user> [reason]` - Kick a user from the server
+- `/ban <user> [reason] [delete_days]` - Ban a user from the server
+- `/timeout <user> <duration> [reason]` - Give a user a timeout (1-40320 minutes)
+- `/warn <user> <reason>` - Give a user a warning
+
+### 🛠️ Utility
+- `/help` - Show all available commands
+- `/setuplog info` - Show information about individual log system (Admin only)
+- `/setuplog recreate` - Recreate missing staff log channels (Admin only)
+
+## 📊 Individual Logging System
+
+**NEW: Each staff member gets their own personal log channel!**
+
+The bot automatically creates and manages individual log channels:
+- **Personal Channels**: Each staff member gets a `#staff-logs-username` channel
+- **Individual Logging**: Only their own actions are logged in their channel
+- **Automatic Management**: Channels are created when adding staff, deleted when removing staff
+- **Private Access**: Only the staff member and admins can view their log channel
+
+### What gets logged in each personal channel:
+- All moderation commands executed by that staff member (kick, ban, timeout, warn)
+- Command arguments, targets, and timestamps
+- Channel where the command was executed
+
+### Managing Log Channels
+Use `/setuplog` to manage the individual log system:
+- `/setuplog info` - Show information about the system
+- `/setuplog recreate` - Recreate missing channels for existing staff
+
+## 🗃️ Database
+
+The bot uses a simple JSON-based database system:
+- `data/staff.json` - Staff member information including their personal log channel IDs
+- `data/logchannels.json` - Legacy global log channel settings (kept for compatibility)
+- `data/guilds.json` - Server-specific settings
+
+## 🔒 Permission System
+
+- **Owner**: Can do everything (set via OWNER_ID in .env)
+- **Administrator**: Can add/remove staff members and set up log channels
+- **Staff**: Can use moderation commands
+- **Members**: Can only use basic commands
+
+## 🚨 Error Handling
+
+The bot has extensive error handling:
+- Checks if users exist before performing actions
+- Prevents staff members from moderating each other (except owner)
+- Sends DMs to users for kicks/bans/timeouts
+- Logs all errors to the console
+
+## 📁 Project Structure
+
+```
+discordbots/
+├── commands/           # All slash commands
+│   ├── addstaff.js    # Add staff member
+│   ├── removestaff.js # Remove staff member
+│   ├── stafflist.js   # Show staff list
+│   ├── setuplog.js    # Set up log channel
+│   ├── kick.js        # Kick command
+│   ├── ban.js         # Ban command
+│   ├── timeout.js     # Timeout command
+│   ├── warn.js        # Warn command
+│   └── help.js        # Help command
+├── data/              # Database files (created automatically)
+├── database.js        # Database handler
+├── index.js           # Main bot file
+├── package.json       # Dependencies and scripts
+├── .env              # Bot token and configuration
+└── README.md         # This file
+```
+
+## 🔧 Development
+
+### Dependencies
+- `discord.js` - Discord API wrapper
+- `dotenv` - Environment variables
+
+### Scripts
+- `npm start` - Start the bot
+- `npm run dev` - Start the bot (alias for start)
+
+## 📝 Notes
+
+- All times are displayed in Discord's timestamp format
+- The bot automatically registers all slash commands on startup
+- Staff cannot moderate other staff members (except the owner)
+- DMs are sent to users before they are moderated
+- Log channels are automatically created if they don't exist
