@@ -1,26 +1,52 @@
 # Discord Staff Management Bot
 
-A Discord bot that can manage staff members and logs all staff activities in a dedicated channel.
+Een Discord bot die staff leden kan beheren en alle staff activiteiten logt in aparte kanalen.
 
 ## ✨ Features
 
-- **Staff Management**: Add and remove staff members
-- **Automatic Logging**: All staff commands are automatically logged
-- **Moderation Commands**: Kick, ban, timeout, warn commands
-- **Log Channel Creation**: Automatic creation of log channels
-- **Permission System**: Only staff and admins can use moderation commands
+- **Staff Management**: Staff leden toevoegen en verwijderen
+- **Automatische Logging**: Alle staff commands worden automatisch gelogd
+- **Moderatie Commands**: Kick, ban, timeout, warn commands
+- **Log Channel Creatie**: Automatische aanmaak van log kanalen
+- **Permissie Systeem**: Alleen staff en admins kunnen moderatie commands gebruiken
 
 ## 🚀 Setup
 
-### 1. Set Bot Token
-Fill in your bot token in the `.env` file:
-```
-BOT_TOKEN=your_bot_token_here
-OWNER_ID=your_discord_user_id
+### 1. Bot Token instellen
+1. Ga naar [Discord Developer Portal](https://discord.com/developers/applications)
+2. Maak een nieuwe applicatie of selecteer een bestaande
+3. Ga naar "Bot" sectie en kopieer de token
+4. Vul je bot token in het `.env` bestand:
+```env
+DISCORD_TOKEN=your_bot_token_here
+CLIENT_ID=your_client_id_here
 ```
 
-### 2. Bot Permissions
-Make sure your bot has the following permissions:
+### 2. Dependencies installeren
+```bash
+npm install
+```
+
+### 3. Bot uitnodigen naar server
+Gebruik deze URL (vervang CLIENT_ID):
+```
+https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands
+```
+
+Of run het setup script voor automatische detectie:
+```bash
+npm run setup
+```
+
+### 4. Bot starten
+```bash
+npm start
+```
+
+**Automatische Guild Detection**: De bot detecteert automatisch de server waar hij in zit. Je hoeft geen GUILD_ID handmatig in te stellen!
+
+## 🔧 Bot Permissies
+Zorg ervoor dat je bot de volgende permissies heeft:
 - `Send Messages`
 - `Use Slash Commands`
 - `Embed Links`

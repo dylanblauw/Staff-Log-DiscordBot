@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
+    "setup": "node setup.js",
+    "build": "node create-distribution.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,5 +17,8 @@
   "dependencies": {
     "discord.js": "^14.23.2",
     "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "archiver": "^5.3.1"
   }
 }

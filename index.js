@@ -43,6 +43,20 @@ const db = new Database();
 client.once('ready', async () => {
     console.log(`🤖 Bot is online als ${client.user.tag}!`);
     
+    // Automatische Guild Detection
+    if (!process.env.GUILD_ID || process.env.GUILD_ID === 'auto' || process.env.GUILD_ID === 'your_server_id_here') {
+        const guild = client.guilds.cache.first();
+        if (guild) {
+            console.log(`\n✅ Bot automatisch gedetecteerd in server: ${guild.name} (${guild.id})`);
+            console.log(`📝 Voor betere prestaties, voeg GUILD_ID=${guild.id} toe aan je .env bestand\n`);
+            process.env.GUILD_ID = guild.id;
+        } else {
+            console.log('\n⚠️  Geen servers gevonden! Zorg ervoor dat de bot is uitgenodigd naar een server.\n');
+        }
+    } else {
+        console.log(`\n✅ Gebruik handmatig ingestelde GUILD_ID: ${process.env.GUILD_ID}\n`);
+    }
+    
     // Initialiseer database
     await db.init();
     
