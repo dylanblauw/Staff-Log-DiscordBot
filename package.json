@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "node index.js",
     "setup": "node setup.js",
-    "build": "node create-distribution.js",
+    "build": "echo 'No build step required'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
